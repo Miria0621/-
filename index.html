@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>众里寻他千百度 - 优质姻缘交友平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 主色调：红色系 */
+        :root {
+            --main-red: #c72c41;
+            --light-red: #f5e6e8;
+            --dark-red: #a01f30;
+            --white: #ffffff;
+            --gray: #f8f9fa;
+            --text: #333333;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: var(--main-red);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--light-red);
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card-title {
+            color: var(--main-red);
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-red);
+        }
+
+        /* 按钮 */
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .btn-red {
+            background-color: var(--main-red);
+            color: white;
+        }
+
+        .btn-red:hover {
+            background-color: var(--dark-red);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--main-red);
+            color: var(--main-red);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-red);
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--main-red);
+        }
+
+        /* 用户卡片列表 */
+        .user-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .user-card {
+            border: 1px solid var(--light-red);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(199,44,65,0.1);
+        }
+
+        .user-avatar {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .user-info {
+            padding: 18px;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--main-red);
+            margin-bottom: 5px;
+        }
+
+        .user-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 10px 0;
+        }
+
+        .tag {
+            background: var(--light-red);
+            color: var(--main-red);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .status {
+            font-size: 13px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .status-wait {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-pass {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* 聊天框 */
+        .chat-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+            z-index: 99;
+        }
+
+        .chat-header {
+            background: var(--main-red);
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+        }
+
+        .chat-body {
+            height: 300px;
+            padding: 15px;
+            overflow-y: auto;
+            background: var(--light-red);
+        }
+
+        .chat-message {
+            margin-bottom: 12px;
+            max-width: 80%;
+        }
+
+        .message-me {
+            margin-left: auto;
+            background: var(--main-red);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px 10px 0 10px;
+        }
+
+        .message-other {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 10px 10px 10px 0;
+            border: 1px solid #ddd;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-input button {
+            margin-left: 8px;
+            border-radius: 20px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .nav-menu {
+                margin-top: 10px;
+            }
+            .nav-menu a {
+                margin: 0 10px;
+            }
+            .chat-box {
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <div class="navbar">
+        <div class="logo">众里寻他千百度</div>
+        <div class="nav-menu">
+            <a href="#home">首页</a>
+            <a href="#user">会员中心</a>
+            <a href="#info">我的资料</a>
+            <a href="#login" id="loginBtn">登录/注册</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 首页欢迎模块 -->
+        <div class="card" id="home">
+            <div class="card-title">缘分，从这里开始</div>
+            <p style="font-size: 16px; margin-bottom: 15px;">
+                真实、纯净、严肃的高品质姻缘交友平台，我们严格审核，只为帮你找到命中注定的那个TA。
+            </p>
+            <button class="btn btn-red" onclick="goInfo()">立即完善资料</button>
+        </div>
+
+        <!-- 个人资料上传 & 审核 -->
+        <div class="card" id="info">
+            <div class="card-title">我的个人信息</div>
+            <div class="form-group">
+                <label>姓名 / 昵称</label>
+                <input type="text" class="form-control" id="name" placeholder="请输入你的称呼">
+            </div>
+            <div class="form-group">
+                <label>年龄</label>
+                <input type="number" class="form-control" id="age" placeholder="请输入年龄">
+            </div>
+            <div class="form-group">
+                <label>职业</label>
+                <input type="text" class="form-control" id="job" placeholder="请输入职业">
+            </div>
+            <div class="form-group">
+                <label>个人介绍</label>
+                <textarea class="form-control" rows="3" id="intro" placeholder="简单介绍一下自己"></textarea>
+            </div>
+            <div class="form-group">
+                <label>上传个人照片</label>
+                <input type="file" class="form-control" id="avatar" accept="image/*">
+            </div>
+            <button class="btn btn-red" onclick="submitInfo()">提交资料审核</button>
+            <div id="auditTip" style="margin-top:15px; color:#856404; display:none;">
+                你的资料已提交，等待管理员审核中...
+            </div>
+        </div>
+
+        <!-- 会员展示区（审核通过展示） -->
+        <div class="card" id="user">
+            <div class="card-title">平台会员（已审核通过）</div>
+            <div class="user-list">
+                <div class="user-card">
+                    <img src="https://picsum.photos/seed/girl1/300/300" class="user-avatar">
+                    <div class="user-info">
+                        <div class="user-name">李小姐</div>
+                        <div>27岁 · 教师</div>
+                        <div class="user-tags">
+                            <span class="tag">温柔</span>
+                            <span class="tag">爱生活</span>
+                            <span class="tag">寻良缘</span>
+                        </div>
+                        <span class="status status-pass">已通过审核</span>
+                        <button class="btn btn-outline" style="width:100%; margin-top:12px;" onclick="startChat()">开始聊天</button>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <img src="https://picsum.photos/seed/boy1/300/300" class="user-avatar">
+                    <div class="user-info">
+                        <div class="user-name">张先生</div>
+                        <div>30岁 · 工程师</div>
+                        <div class="user-tags">
+                            <span class="tag">稳重</span>
+                            <span class="tag">上进</span>
+                            <span class="tag">真心交友</span>
+                        </div>
+                        <span class="status status-pass">已通过审核</span>
+                        <button class="btn btn-outline" style="width:100%; margin-top:12px;" onclick="startChat()">开始聊天</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 聊天窗口（默认隐藏） -->
+    <div class="chat-box" id="chatBox" style="display:none;">
+        <div class="chat-header">与 TA 聊天中</div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message message-other">你好呀，很高兴认识你～</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatMsg" placeholder="输入消息...">
+            <button class="btn btn-red" onclick="sendMsg()">发送</button>
+        </div>
+    </div>
+
+    <script>
+        // 提交资料审核
+        function submitInfo() {
+            const name = document.getElementById('name').value;
+            if(!name) {
+                alert('请先填写你的昵称');
+                return;
+            }
+            document.getElementById('auditTip').style.display = 'block';
+            alert('资料提交成功！管理员会尽快为你审核');
+        }
+
+        // 跳转到资料页
+        function goInfo() {
+            document.getElementById('info').scrollIntoView({behavior:'smooth'});
+        }
+
+        // 打开聊天框
+        function startChat() {
+            document.getElementById('chatBox').style.display = 'block';
+        }
+
+        // 发送聊天消息
+        function sendMsg() {
+            const msg = document.getElementById('chatMsg').value;
+            if(!msg) return;
+            const chatBody = document.getElementById('chatBody');
+            const dom = `<div class="chat-message message-me">${msg}</div>`;
+            chatBody.innerHTML += dom;
+            document.getElementById('chatMsg').value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    </script>
+</body>
+</html>
